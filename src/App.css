@@ -12,22 +12,23 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Reduce animations on mobile */
+  /* Легкое уменьшение анимаций на мобильных для плавности */
   @media (prefers-reduced-motion: no-preference) {
     * {
-      animation-duration: 0.8s !important;
-      transition-duration: 0.2s !important;
+      animation-duration: 0.9s !important;
+      transition-duration: 0.3s !important;
     }
   }
 }
 
-/* Disable all animations during loading */
-.site--loading *,
-.site--loading *::before,
-.site--loading *::after {
+/* Disable only heavy animations during loading */
+.site--loading .fade-in,
+.site--loading .slide-up,
+.site--loading .slide-up-delay-2,
+.site--loading .slide-up-delay-3,
+.site--loading .scale-in {
   animation: none !important;
-  transition: none !important;
-  transform: none !important;
+  opacity: 0;
 }
 
 /* Optimize image loading */

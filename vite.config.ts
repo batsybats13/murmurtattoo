@@ -20,10 +20,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
-    include: [
-      "@appletosolutions/reactbits",
-      "@use-gesture/react",
-    ],
+    include: ["@appletosolutions/reactbits", "@use-gesture/react"],
     exclude: [
       // Исключаем неиспользуемые тяжелые библиотеки
       "@chakra-ui/react",
