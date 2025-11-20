@@ -1,13 +1,7 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useState } from "react";
 import gothicLogo from "../assets/60218315_2195312547253914_5590963038934007808_n.jpg";
 import ElectricBorder from "../components/ElectricBorder";
-
-// Lazy load CircularText только на десктопе
-const CircularText = lazy(() =>
-  import("@appletosolutions/reactbits").then((mod) => ({
-    default: mod.CircularText,
-  }))
-);
+import CircularText from "../components/CircularText";
 
 const stats = [
   { label: "Опыт работы", value: "7+" },
@@ -20,7 +14,6 @@ const stats = [
 ];
 
 export default function Home() {
-  const circularTextRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -36,28 +29,6 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    const updateTextColor = () => {
-      if (circularTextRef.current) {
-        const svg = circularTextRef.current.querySelector("svg");
-        if (svg) {
-          const textElements = svg.querySelectorAll("text, textPath, tspan");
-          textElements.forEach((el) => {
-            (el as SVGElement).setAttribute("fill", "#367faf");
-            (el as SVGElement).style.fill = "#367faf";
-          });
-        }
-      }
-    };
-
-    // Обновляем сразу
-    updateTextColor();
-    // На мобильных реже обновляем для производительности
-    const interval = setInterval(updateTextColor, isMobile ? 500 : 200);
-
-    return () => clearInterval(interval);
-  }, [isMobile]);
-
   return (
     <header className="hero" id="hero">
       <div className="container">
@@ -71,21 +42,15 @@ export default function Home() {
                 marginBottom: "1.5rem",
               }}
             >
-              <div className="circular-text-wrapper" ref={circularTextRef}>
-                <Suspense
-                  fallback={
-                    <h1 className="circular-text-mobile">
-                      MUR MUR 13 · TATTOO STUDIO
-                    </h1>
-                  }
-                >
-                  <CircularText
-                    text="MUR MUR 13 · TATTOO STUDIO · "
-                    spinDuration={isMobile ? 20 : 15}
-                    onHover="slowDown"
-                    className="circular-text-gothic"
-                  />
-                </Suspense>
+              <div className="circular-text-wrapper">
+                <CircularText
+                  text="MUR MUR 13 · TATTOO STUDIO · "
+                  spinDuration={isMobile ? 20 : 15}
+                  radius={isMobile ? 60 : 80}
+                  fontSize={isMobile ? 12 : 14}
+                  color="#367faf"
+                  className="circular-text-gothic"
+                />
               </div>
             </div>
             <p className="hero-description slide-up-delay-2">

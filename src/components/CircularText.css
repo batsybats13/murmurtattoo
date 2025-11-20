@@ -1,0 +1,29 @@
+.circular-text-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.circular-text-svg {
+  display: block;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Оптимизация для мобильных */
+@media (max-width: 768px) {
+  .circular-text-svg {
+    animation-duration: 20s !important;
+  }
+}
+
