@@ -12,11 +12,11 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Легкое уменьшение анимаций на мобильных для плавности */
+  /* Легкое уменьшение анимаций на мобильных для плавности (но не отключаем полностью) */
   @media (prefers-reduced-motion: no-preference) {
     * {
-      animation-duration: 0.9s !important;
-      transition-duration: 0.3s !important;
+      animation-duration: 1s !important;
+      transition-duration: 0.4s !important;
     }
   }
 }

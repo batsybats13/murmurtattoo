@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useId, useLayoutEffect, useRef } from 'react';
 import type { CSSProperties, PropsWithChildren } from 'react';
 
 import './ElectricBorder.css';
@@ -26,7 +26,6 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
   const svgRef = useRef<SVGSVGElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const strokeRef = useRef<HTMLDivElement | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
 
   const updateAnim = () => {
     const svg = svgRef.current;
@@ -84,26 +83,15 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     updateAnim();
   }, [speed, chaos]);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
   useLayoutEffect(() => {
     if (!rootRef.current) return;
-    // На мобильных отключаем анимации для производительности
-    if (isMobile) return;
 
     const ro = new ResizeObserver(() => updateAnim());
     ro.observe(rootRef.current);
     updateAnim();
 
     return () => ro.disconnect();
-  }, [isMobile]);
+  }, []);
 
   const vars: CSSProperties = {
     ['--electric-border-color' as any]: color,
@@ -111,9 +99,8 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
   };
 
   return (
-    <div ref={rootRef} className={`electric-border ${className ?? ''} ${isMobile ? 'electric-border--mobile' : ''}`} style={{ ...vars, ...style }}>
-      {!isMobile && (
-        <svg ref={svgRef} className="eb-svg" aria-hidden focusable="false">
+    <div ref={rootRef} className={`electric-border ${className ?? ''}`} style={{ ...vars, ...style }}>
+      <svg ref={svgRef} className="eb-svg" aria-hidden focusable="false">
           <defs>
             <filter id={filterId} colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
               <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="1" />
@@ -145,16 +132,11 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
             </filter>
           </defs>
         </svg>
-      )}
       <div className="eb-layers">
         <div ref={strokeRef} className="eb-stroke" />
-        {!isMobile && (
-          <>
-            <div className="eb-glow-1" />
-            <div className="eb-glow-2" />
-            <div className="eb-background-glow" />
-          </>
-        )}
+        <div className="eb-glow-1" />
+        <div className="eb-glow-2" />
+        <div className="eb-background-glow" />
       </div>
       <div className="eb-content">{children}</div>
     </div>
