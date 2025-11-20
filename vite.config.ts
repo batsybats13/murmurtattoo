@@ -7,18 +7,24 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks: (id) => {
           // Выделяем reactbits в отдельный чанк (тяжелая библиотека)
-          'reactbits': ['@appletosolutions/reactbits'],
-          // Выделяем react-router в отдельный чанк
-          'react-router': ['react-router-dom'],
-          // Выделяем остальные тяжелые библиотеки
-          'vendor': [
-            'react',
-            'react-dom',
-            'framer-motion',
-            'gsap',
-          ],
+          if (id.includes("@appletosolutions/reactbits")) {
+            return "reactbits";
+          }
+          // НЕ разделяем React - оставляем в основном бандле для стабильности
+          // React, React-DOM и React-Router должны быть вместе
+          // Остальные тяжелые библиотеки можно разделить
+          if (
+            id.includes("framer-motion") ||
+            id.includes("gsap") ||
+            id.includes("matter-js") ||
+            id.includes("ogl") ||
+            id.includes("gl-matrix") ||
+            id.includes("three")
+          ) {
+            return "vendor";
+          }
         },
       },
     },

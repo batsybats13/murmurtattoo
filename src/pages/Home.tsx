@@ -78,7 +78,13 @@ export default function Home() {
                     MUR MUR 13 · TATTOO STUDIO
                   </h1>
                 ) : (
-                  <Suspense fallback={<h1 className="circular-text-mobile">MUR MUR 13 · TATTOO STUDIO</h1>}>
+                  <Suspense
+                    fallback={
+                      <h1 className="circular-text-mobile">
+                        MUR MUR 13 · TATTOO STUDIO
+                      </h1>
+                    }
+                  >
                     <CircularText
                       text="MUR MUR 13 · TATTOO STUDIO · "
                       spinDuration={15}
