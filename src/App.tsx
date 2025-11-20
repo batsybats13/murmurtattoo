@@ -1,7 +1,9 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
-import { Lightning } from "@appletosolutions/reactbits";
+import * as ReactBits from "@appletosolutions/reactbits";
+
+const Lightning = ReactBits.Lightning;
 
 import Home from "./pages/Home";
 import BottomNav from "./components/BottomNav";
@@ -106,13 +108,15 @@ function App() {
             pointerEvents: "none",
           }}
         >
-          <Lightning
-            hue={0}
-            speed={0.4}
-            intensity={0.8}
-            size={0.5}
-            xOffset={-0.9}
-          />
+          {Lightning ? (
+            <Lightning
+              hue={0}
+              speed={0.4}
+              intensity={0.8}
+              size={0.5}
+              xOffset={-0.9}
+            />
+          ) : null}
         </div>
       )}
       {isLoading && (

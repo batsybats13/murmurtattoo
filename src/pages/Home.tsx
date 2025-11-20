@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import gothicLogo from "../assets/60218315_2195312547253914_5590963038934007808_n.jpg";
-import { CircularText } from "@appletosolutions/reactbits";
+import * as ReactBits from "@appletosolutions/reactbits";
 import ElectricBorder from "../components/ElectricBorder";
+
+const CircularText = ReactBits.CircularText;
 
 const stats = [
   { label: "Опыт работы", value: "7+" },
@@ -16,6 +18,7 @@ const stats = [
 export default function Home() {
   const circularTextRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isCircularTextReady, setIsCircularTextReady] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -25,10 +28,21 @@ export default function Home() {
     checkMobile();
     window.addEventListener("resize", checkMobile);
 
+    // Отложить рендеринг CircularText до полной загрузки
+    if (!isMobile) {
+      const timer = setTimeout(() => {
+        setIsCircularTextReady(true);
+      }, 100);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener("resize", checkMobile);
+      };
+    }
+
     return () => {
       window.removeEventListener("resize", checkMobile);
     };
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     if (isMobile) return; // На мобильных не обновляем цвет
@@ -67,7 +81,7 @@ export default function Home() {
               }}
             >
               <div className="circular-text-wrapper" ref={circularTextRef}>
-                {isMobile ? (
+                {isMobile || !isCircularTextReady || !CircularText ? (
                   <h1 className="circular-text-mobile">
                     MUR MUR 13 · TATTOO STUDIO
                   </h1>

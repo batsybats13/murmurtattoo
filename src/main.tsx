@@ -4,6 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 
+// Инициализация reactbits перед рендерингом приложения
+if (typeof window !== "undefined") {
+  // Предзагрузка reactbits для правильной инициализации
+  import("@appletosolutions/reactbits").catch((error) => {
+    console.warn("Failed to preload reactbits:", error);
+  });
+}
+
 // Suppress React DevTools semver error (known issue with React 19.2.0 and React DevTools)
 if (typeof window !== "undefined") {
   // Handle uncaught errors
