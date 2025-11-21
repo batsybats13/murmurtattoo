@@ -188,9 +188,8 @@ if (typeof window !== "undefined") {
   // Сохраняем кэш в localStorage периодически
   setInterval(() => {
     try {
-      const cacheData: Record<string, CacheEntry<any>> = {};
       appCache.cleanup();
-      // Здесь нужно будет добавить метод для экспорта кэша
+      // TODO: Добавить метод для экспорта кэша в localStorage
     } catch (e) {
       console.warn("Failed to save cache to localStorage", e);
     }
