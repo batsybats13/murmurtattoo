@@ -17,7 +17,7 @@ export default function Feed() {
             src="https://www.instagram.com/murmur13tattoo/embed"
             title="Instagram Mur Mur 13"
             loading="lazy"
-            allowtransparency="true"
+            allowTransparency={true}
             referrerPolicy="no-referrer-when-downgrade"
           />
           <a
