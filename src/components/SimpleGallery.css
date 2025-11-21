@@ -1,0 +1,122 @@
+.gallery {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0;
+}
+
+.img-c {
+  width: 200px;
+  height: 200px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: width ease 400ms, height ease 350ms,
+    left cubic-bezier(0.4, 0, 0.2, 1) 420ms,
+    top cubic-bezier(0.4, 0, 0.2, 1) 420ms;
+  aspect-ratio: 1;
+}
+
+.img-w {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: transform ease-in-out 300ms;
+  filter: grayscale(0.8) brightness(0.7);
+}
+
+.img-c:hover .img-w {
+  transform: scale(1.08);
+  transition: transform cubic-bezier(0.4, 0, 0.2, 1) 450ms;
+  filter: grayscale(0.4) brightness(0.9);
+}
+
+.img-w img {
+  display: none;
+}
+
+.img-c.active {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  z-index: 2;
+}
+
+.img-c.postactive {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.img-c.active.positioned {
+  left: 0 !important;
+  top: 0 !important;
+  transition-delay: 50ms;
+}
+
+.img-c.active .img-w {
+  filter: grayscale(0) brightness(1);
+}
+
+/* Название стиля на изображении */
+.img-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7), transparent);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-top: 1px solid rgba(139, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.img-c:hover .img-title {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.8), transparent);
+  border-top-color: rgba(139, 0, 0, 0.6);
+  font-weight: 700;
+}
+
+.img-c.active .img-title {
+  border-top-color: rgba(139, 0, 0, 0.7);
+  font-size: 1rem;
+  padding: 1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0;
+  }
+
+  .img-c {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+  }
+
+  .img-title {
+    font-size: 0.75rem;
+    padding: 0.6rem;
+  }
+}
+

@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { styleCategories } from "../data/styles";
-import DomeGallery from "../components/DomeGallery";
+import SimpleGallery from "../components/SimpleGallery";
 
 export default function Styles() {
   const [selectedStyle, setSelectedStyle] = useState<{
@@ -45,7 +45,7 @@ export default function Styles() {
     };
   }, [selectedStyle]);
 
-  // Подготовка данных для DomeGallery - берем изображения из всех стилей
+  // Подготовка данных для галереи - берем изображения из всех стилей
   const galleryImages = useMemo(() => {
     const images: Array<{
       src: string;
@@ -142,26 +142,25 @@ export default function Styles() {
 
       <div className="styles-gallery-wrapper fade-in-delay-3">
         {galleryImages.length > 0 ? (
-          <DomeGallery
-            images={galleryImages}
-            fit={isMobile ? 0.5 : 0.7}
-            fitBasis="auto"
-            minRadius={isMobile ? 600 : 900}
-            maxRadius={Infinity}
-            padFactor={isMobile ? 0.2 : 0.15}
-            overlayBlurColor="transparent"
-            maxVerticalRotationDeg={isMobile ? 3 : 5}
-            dragSensitivity={isMobile ? 30 : 20}
-            enlargeTransitionMs={isMobile ? 200 : 300}
-            segments={isMobile ? 30 : 40}
-            dragDampening={isMobile ? 3 : 2}
-            openedImageWidth={isMobile ? "90vw" : "600px"}
-            openedImageHeight={isMobile ? "90vh" : "600px"}
-            imageBorderRadius="30px"
-            openedImageBorderRadius="30px"
-            grayscale={true}
-            onItemClick={handleItemClick}
-          />
+          isMobile ? (
+            <div className="styles-grid-mobile">
+              {galleryImages.slice(0, 12).map((item, index) => (
+                <div
+                  key={index}
+                  className="style-card-mobile"
+                  onClick={() => handleItemClick(item)}
+                >
+                  <img src={item.src} alt={item.alt} loading="lazy" />
+                  <div className="style-card-mobile-title">{item.title}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <SimpleGallery
+              images={galleryImages}
+              onItemClick={handleItemClick}
+            />
+          )
         ) : (
           <div style={{ padding: "2rem", textAlign: "center", color: "white" }}>
             Загрузка галереи...

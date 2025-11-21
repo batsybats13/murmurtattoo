@@ -54,6 +54,8 @@
   fill: #FF0C04;
   filter: drop-shadow(0 0 10px #FF0C04) drop-shadow(0 0 15px #FF0C04) drop-shadow(0 0 20px rgba(255, 12, 4, 0.9));
   animation: neonBlink 1.5s ease-in-out infinite;
+  /* Улучшенное свечение для всех устройств */
+  text-shadow: 0 0 10px #FF0C04, 0 0 20px #FF0C04, 0 0 30px #FF0C04;
 }
 
 @keyframes neonBlink {
@@ -79,6 +81,34 @@
 @media (max-width: 768px) {
   .circular-text-container {
     min-height: 320px;
+  }
+
+  /* Усиленное свечение неона на мобильных */
+  .circular-text-neon {
+    filter: 
+      drop-shadow(0 0 8px #FF0C04) 
+      drop-shadow(0 0 12px #FF0C04) 
+      drop-shadow(0 0 18px #FF0C04)
+      drop-shadow(0 0 24px rgba(255, 12, 4, 0.8));
+    animation: neonBlinkMobile 1.5s ease-in-out infinite;
+  }
+
+  @keyframes neonBlinkMobile {
+    0%, 100% {
+      opacity: 1;
+      filter: 
+        drop-shadow(0 0 8px #FF0C04) 
+        drop-shadow(0 0 12px #FF0C04) 
+        drop-shadow(0 0 18px #FF0C04)
+        drop-shadow(0 0 24px rgba(255, 12, 4, 0.8));
+    }
+    50% {
+      opacity: 0.75;
+      filter: 
+        drop-shadow(0 0 6px #FF0C04) 
+        drop-shadow(0 0 10px #FF0C04) 
+        drop-shadow(0 0 14px rgba(255, 12, 4, 0.7));
+    }
   }
 }
 

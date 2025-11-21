@@ -23,10 +23,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Выделяем reactbits в отдельный чанк (тяжелая библиотека)
-          if (id.includes("@appletosolutions/reactbits")) {
-            return "reactbits";
-          }
           // Выделяем vendor библиотеки в отдельный чанк
           if (id.includes("node_modules")) {
             // React и React-DOM в основной чанк
@@ -58,8 +54,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: [
-      "@appletosolutions/reactbits",
-      "@use-gesture/react",
       "use-sync-external-store",
       "@emotion/react",
       "@emotion/styled",

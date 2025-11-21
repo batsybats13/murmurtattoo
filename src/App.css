@@ -28,7 +28,6 @@
 }
 
 /* Исключение для галереи стилей - оставляем её анимации */
-/* Галерея стилей (.sphere-root и дочерние элементы) работает со своими анимациями */
 
 /* Performance optimizations for mobile */
 @media (max-width: 768px) {
@@ -37,9 +36,7 @@
   }
 
   /* Исключение только для галереи стилей */
-  .styles-gallery-wrapper *,
-  .dome-gallery *,
-  .dome-gallery-container * {
+  .styles-gallery-wrapper * {
     animation: unset !important;
     transition: unset !important;
   }
@@ -859,19 +856,80 @@ img {
 .styles-gallery-wrapper {
   margin: 3rem auto;
   width: 100%;
-  height: 85vh;
-  min-height: 700px;
-  max-height: 1000px;
+  max-width: 900px;
   display: block;
   position: relative;
-  overflow: hidden;
   z-index: 1;
   background: transparent;
+  padding: 1rem;
 }
 
-.styles-gallery-wrapper > * {
+/* Мобильная сетка для стилей */
+.styles-grid-mobile {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 100%;
+}
+
+.style-card-mobile {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(139, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.style-card-mobile:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 0, 0, 0.6);
+  box-shadow: 0 8px 20px rgba(179, 0, 0, 0.4);
+}
+
+.style-card-mobile img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) brightness(0.7);
+  transition: filter 0.3s ease;
+}
+
+.style-card-mobile:hover img {
+  filter: grayscale(0.5) brightness(0.9);
+}
+
+.style-card-mobile-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .styles-gallery-wrapper {
+    min-height: auto;
+    height: auto;
+    margin: 2rem auto;
+  }
+
+  .styles-grid-mobile {
+    gap: 0.75rem;
+    padding: 0.5rem;
+  }
 }
 
 .styles-toggle {

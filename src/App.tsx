@@ -9,7 +9,8 @@ import { cachedLazy } from "./utils/cache";
 // Lazy load всех страниц кроме Home с кэшированием для быстрой работы
 const Benefits = lazy(cachedLazy(() => import("./pages/Benefits"), "Benefits"));
 const Process = lazy(cachedLazy(() => import("./pages/Process"), "Process"));
-const Styles = lazy(cachedLazy(() => import("./pages/Styles"), "Styles"));
+// Загружаем Styles без кэширования для более быстрой первой загрузки
+const Styles = lazy(() => import("./pages/Styles"));
 const Feed = lazy(cachedLazy(() => import("./pages/Feed"), "Feed"));
 const Booking = lazy(cachedLazy(() => import("./pages/Booking"), "Booking"));
 
