@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useMemo, useCallback } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -49,6 +49,7 @@ const NAV_ITEMS: NavItemConfig[] = [
 
 export default function BottomNav() {
   const location = useLocation();
+  const navigate = useNavigate();
   const navRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
@@ -121,9 +122,13 @@ export default function BottomNav() {
       <nav ref={navRef} className="bottom-nav-telegram">
         <div ref={pillRef} className="nav-pill" />
         {navItems.map((item) => (
-          <Link
+          <a
             key={item.path}
-            to={item.path}
+            href={item.path}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(item.path);
+            }}
             className={`nav-item ${isActive(item.path) ? "active" : ""}`}
           >
             <span className="nav-item-icon">
@@ -157,7 +162,7 @@ export default function BottomNav() {
               </svg>
             </span>
             <span className="nav-item-label">{item.label}</span>
-          </Link>
+          </a>
         ))}
       </nav>
     </>

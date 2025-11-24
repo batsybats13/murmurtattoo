@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import CircularText from "../components/CircularText";
 import { prefetchRoutes } from "../utils/prefetchRoutes";
@@ -97,9 +98,9 @@ export default function Home() {
               >
                 <span>{t("home.telegram")}</span>
               </a>
-              <a className="btn btn-secondary" href="/booking">
+              <Link className="btn btn-secondary" to="/booking">
                 <span>{t("home.book")}</span>
-              </a>
+              </Link>
             </div>
             <div className="hero-stats">
               {stats.map((stat) => (
