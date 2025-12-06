@@ -47,16 +47,6 @@ export default function Styles() {
     };
   }, [selectedStyle]);
 
-  // Функция для исправления путей с пробелами (только для проблемных стилей)
-  const fixImagePath = (path: string): string => {
-    // Если путь содержит пробелы, кодируем их для правильной работы в Vite
-    if (path.includes('PortraitTattoo ') || path.includes('black gray')) {
-      // Кодируем пробелы в URL
-      return path.replace(/ /g, '%20');
-    }
-    return path;
-  };
-
   // Подготовка данных для галереи - берем изображения из всех стилей
   const galleryImages = useMemo(() => {
     const images: Array<{
@@ -69,15 +59,13 @@ export default function Styles() {
     styleCategories.forEach((category) => {
       category.styles.forEach((style) => {
         if (style.images && style.images.length > 0 && style.images[0]) {
-          // Исправляем пути для проблемных стилей
-          const fixedImages = style.images.map(img => fixImagePath(img));
           // Берем первое изображение для отображения, но сохраняем все для карусели
           images.push({
-            src: fixedImages[0],
+            src: style.images[0],
             alt: style.name,
             title: style.name,
             description: style.description,
-            allImages: fixedImages,
+            allImages: style.images,
           });
         }
       });
